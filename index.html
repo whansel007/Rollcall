@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c0d0b">
+<title>ROLLCALL — face attendance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ══ BOOT ══ -->
+<div id="boot" class="boot">
+  <div class="boot-inner">
+    <div class="boot-mark">R<span>/</span>C</div>
+    <div class="boot-title">ROLLCALL</div>
+    <div class="boot-sub">on-device face attendance</div>
+    <div class="boot-bar"><i id="bootBar"></i></div>
+    <div id="bootMsg" class="boot-msg">initialising…</div>
+  </div>
+</div>
+
+<!-- ══ APP SHELL ══ -->
+<div id="shell" class="shell" hidden>
+  <header class="topbar">
+    <button class="brand" data-nav="classes" title="All classes">
+      <span class="brand-mark">R<span>/</span>C</span>
+      <span class="brand-text">ROLLCALL</span>
+    </button>
+    <nav class="crumbs" id="crumbs"></nav>
+    <div class="topbar-right">
+      <span id="storeBadge" class="badge badge-dim" title="Storage status">local</span>
+      <button class="icon-btn" id="btnSettings" title="Settings" aria-label="Settings">⚙</button>
+    </div>
+  </header>
+
+  <main id="view" class="view"></main>
+
+  <footer class="statusbar">
+    <span class="dot" id="engineDot"></span>
+    <span id="engineTxt">engine ready</span>
+    <span class="sep">·</span>
+    <span id="statsTxt">—</span>
+    <span class="grow"></span>
+    <span class="mono dim">all data stays on this device</span>
+  </footer>
+</div>
+
+<!-- ══ KIOSK (fullscreen) ══ -->
+<div id="kiosk" class="kiosk" hidden>
+  <div class="kiosk-stage">
+    <div class="camwrap" id="camwrap">
+      <video id="video" playsinline autoplay muted></video>
+      <canvas id="overlay"></canvas>
+      <div class="reticle"><i></i><i></i><i></i><i></i></div>
+      <div class="scanline" id="scanline"></div>
+      <div class="cam-msg" id="camMsg" hidden></div>
+    </div>
+    <div class="kiosk-hud">
+      <div class="hud-name" id="hudName">READY</div>
+      <div class="hud-sub" id="hudSub">point the camera at the doorway</div>
+    </div>
+  </div>
+
+  <aside class="kiosk-side">
+    <div class="kiosk-side-head">
+      <div>
+        <div class="ks-class" id="ksClass">—</div>
+        <div class="ks-meta mono" id="ksMeta">—</div>
+      </div>
+      <div class="ks-count"><b id="ksPresent">0</b><span id="ksTotal">/0</span></div>
+    </div>
+    <div class="ks-tabs">
+      <button class="ks-tab is-on" data-kstab="log">Log</button>
+      <button class="ks-tab" data-kstab="unknown">Unknown <i class="pill" id="ksUnkCount">0</i></button>
+      <button class="ks-tab" data-kstab="absent">Not yet <i class="pill" id="ksAbsCount">0</i></button>
+    </div>
+    <div class="ks-body" id="ksBody"></div>
+    <div class="kiosk-actions">
+      <button class="btn btn-ghost btn-lg" id="btnPause">Pause</button>
+      <button class="btn btn-primary btn-lg" id="btnEndSession">End &amp; report</button>
+    </div>
+  </aside>
+
+  <button class="kiosk-close" id="btnKioskClose" aria-label="Leave kiosk">✕</button>
+  <div class="toast-stack" id="toasts"></div>
+</div>
+
+<!-- ══ MODAL ══ -->
+<div id="modal" class="modal" hidden>
+  <div class="modal-card" id="modalCard" role="dialog" aria-modal="true"></div>
+</div>
+
+<div class="toast-stack" id="toastsMain"></div>
+
+<script src="vendor/face-api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
